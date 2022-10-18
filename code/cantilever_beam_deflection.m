@@ -6,11 +6,15 @@ L = 0.6;
 z = 0:0.01:L;
 F = 1.0;
 b = 0.035;
-delta = (F*z.^3)/(3*E*I);
-delta1 = delta - (z/L).*((F*z.^3)/(4*E*I));
-dc = (12*E*I/(L^3))*(delta/F);
-dc1 = (12*E*I/(L^3))*(delta1/F);
-dll = z/L;
+a6 = -b/L;
+r = 0.01;
+% tau = 4;
+tau = 5.85;
+% delta = (F*z.^3)/(3*E*I);
+% delta1 = delta - (z/L).*((F*z.^3)/(4*E*I));
+% dc = (12*E*I/(L^3))*(delta/F);
+% dc1 = (12*E*I/(L^3))*(delta1/F);
+% dll = z/L;
 % figure
 % plot(dll, dc)
 % hold on
@@ -19,26 +23,26 @@ dll = z/L;
 % ylim([0 1]);
 % hold off
 %% 1) Non Parallel Tendon deflections
-a1 = 0;
-a2 = -0.2*(b/L);
-a3 = -0.4*(b/L);
-a4 = -0.6*(b/L);
-a5 = -0.8*(b/L);
-a6 = -b/L;
+% a1 = 0;
+% a2 = -0.2*(b/L);
+% a3 = -0.4*(b/L);
+% a4 = -0.6*(b/L);
+% a5 = -0.8*(b/L);
 
-delta_non_p1 = calc_delta_non_parallel(a1);
-delta_non_p2 = calc_delta_non_parallel(a2);
-delta_non_p3 = calc_delta_non_parallel(a3);
-delta_non_p4 = calc_delta_non_parallel(a4);
-delta_non_p5 = calc_delta_non_parallel(a5);
-delta_non_p6 = calc_delta_non_parallel(a6);
 
-dc_np1 = (12*E*I/(L^3))*(delta_non_p1/F);
-dc_np2 = (12*E*I/(L^3))*(delta_non_p2/F);
-dc_np3 = (12*E*I/(L^3))*(delta_non_p3/F);
-dc_np4 = (12*E*I/(L^3))*(delta_non_p4/F);
-dc_np5 = (12*E*I/(L^3))*(delta_non_p5/F);
-dc_np6 = (12*E*I/(L^3))*(delta_non_p6/F);
+% delta_non_p1 = calc_delta_non_parallel(a1);
+% delta_non_p2 = calc_delta_non_parallel(a2);
+% delta_non_p3 = calc_delta_non_parallel(a3);
+% delta_non_p4 = calc_delta_non_parallel(a4);
+% delta_non_p5 = calc_delta_non_parallel(a5);
+% delta_non_p6 = calc_delta_non_parallel(a6);
+% 
+% dc_np1 = (12*E*I/(L^3))*(delta_non_p1/F);
+% dc_np2 = (12*E*I/(L^3))*(delta_non_p2/F);
+% dc_np3 = (12*E*I/(L^3))*(delta_non_p3/F);
+% dc_np4 = (12*E*I/(L^3))*(delta_non_p4/F);
+% dc_np5 = (12*E*I/(L^3))*(delta_non_p5/F);
+% dc_np6 = (12*E*I/(L^3))*(delta_non_p6/F);
 
 % figure
 % plot(dll, dc_np1);
@@ -54,14 +58,14 @@ dc_np6 = (12*E*I/(L^3))*(delta_non_p6/F);
 % hold off
 
 %% 2) relationship between a tendon’s stiffness and the deflection response to a tip load for both parallel routing and converging routing
-r = 0.1:0.01:1;
-b = 0.1:0.01:1;
-k = 2.3*10e6;
-delta_parallel_tip = (F*L^3)/(3*E*I) - ((r.*r.*k*L)./(E*I + r.*r.*k*L))*((F*L^3)/(4*E*I));
-delta_converging_tip = (F*L^3)/(3*E*I) - ((b.*b.*k*L)./(3*E*I + b.*b.*k*L))*((F*L^3)/(3*E*I));
-dtc_parallel = ((12*E*I)/(L^3))*(delta_parallel_tip/F);
-dtc_converging = ((12*E*I)/(L^3))*(delta_converging_tip/F);
-dts = ((r.^2)*k*L)/(E*I);
+% r = 0.1:0.01:1;
+% b = 0.1:0.01:1;
+% k = 2.3*10e6;
+% delta_parallel_tip = (F*L^3)/(3*E*I) - ((r.*r.*k*L)./(E*I + r.*r.*k*L))*((F*L^3)/(4*E*I));
+% delta_converging_tip = (F*L^3)/(3*E*I) - ((b.*b.*k*L)./(3*E*I + b.*b.*k*L))*((F*L^3)/(3*E*I));
+% dtc_parallel = ((12*E*I)/(L^3))*(delta_parallel_tip/F);
+% dtc_converging = ((12*E*I)/(L^3))*(delta_converging_tip/F);
+% dts = ((r.^2)*k*L)/(E*I);
 % figure
 % plot(dts, dtc_parallel);
 % hold on
@@ -75,13 +79,13 @@ dts = ((r.^2)*k*L)/(E*I);
 % solving quadratic equation of theta in order to get relation of theta
 % along x and y axis
 
-r = 0.01;
-tau = 10;
-% quadratic equation of theta
-alpha = (F*r*r)/(2*E*I);
-beta = 1 - (pi*F*r*r)/(2*E*I) + r*r*tau - r*F*z;
-gamma = F*r*r*pi*pi/(8*E*I) - (pi*r*r*tau/2) + (r*F*z/2);
-theta_sol = (-beta + sqrt(beta.*beta - 4*alpha*gamma))./(2*alpha);
+% r = 0.01;
+% tau = 10;
+% % quadratic equation of theta
+% alpha = (F*r*r)/(2*E*I);
+% beta = 1 - (pi*F*r*r)/(2*E*I) + r*r*tau - r*F*z;
+% gamma = F*r*r*pi*pi/(8*E*I) - (pi*r*r*tau/2) + (r*F*z/2);
+% theta_sol = (-beta + sqrt(beta.*beta - 4*alpha*gamma))./(2*alpha);
 % figure
 % hold on
 % plot(r*cos(theta_sol), r*sin(theta_sol));
@@ -101,9 +105,9 @@ save example.mat coordinate_matrix_parallel_routing -v7.3;
 % hold off
 
 %% 5) Profile of flexible rod for converging tendons
-B = 0.35;
+B = L;
 funx = @(s) cos(0.5.*a6.*tau.*s.*s + B.*tau.*s);
-funy = @(s) -sin(0.5.*a6.*tau.*s.*s + B.*tau.*s);
+funy = @(s) sin(0.5.*a6.*tau.*s.*s + B.*tau.*s);
 integralx_storage = zeros(1, length(z));
 integraly_storage = zeros(1, length(z));
 x_s2 = zeros(1, length(z));
@@ -115,8 +119,8 @@ for i = 1:length(z)
     y_s2(i) = integral(funx, 0, z(i));
 end
 
-figure
-hold on
+% figure
+% hold on
 % title('Profile of the rod having converging tendons');
 % plot(integralx_storage, integraly_storage);
 % hold off
@@ -135,25 +139,40 @@ hold on
 % hold off
 
 %% 6) Experimental comparison of analytically determined curves with the actual robot profile
-img1 = imread('C:\Users\C.ASHWIN\Desktop\flexible_robotics\Robot_images_testing\converging_profile\converging_2.jpg');
+img1 = imread('C:\Users\C.ASHWIN\Desktop\flexible_robotics\Robot_images_testing\converging_profile\converging_3.jpg');
 J1 = imrotate(img1,360);
 % imshow(img)
 imshow(J1)
 % J2 = imresize(J1, 0.05);
 % imshow(J2)
 axis on
+scaling_factor = 2000;
+x_s_mod = x_s*scaling_factor;
+y_s_mod = y_s*scaling_factor;
+[x,y] = ginput(1);
 
-[X,Y] = ginput(3);
-[a,b,c] = polyn_predictor(X,Y);
-y_exp = a*z.*z + b*z + c;
-
-plot(x_s, y_exp - c);
+% for i = 1:length(x_s_mod)
+%     x_s_mod(i) = x_s_mod(i) + x;
+%     y_s_mod(i) = y_s_mod(i) - y_s_mod(1) + y;
+% end
 hold on
-plot(x_s, y_s - 0.278146);
+plot(x_s_mod-x_s_mod(1)+x, -y_s_mod+y_s_mod(1)+y,'red');
 hold off
-legend('robot profile obtained experimentally', 'robot profile obtained analytically');
-xlabel('x coordinate of robot(in m)');
-ylabel('y coordinate of robot(in m)');
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% [X,Y] = ginput(3);
+% [a,b,c] = polyn_predictor(X,Y);
+% y_exp = a*z.*z + b*z + c;
+% 
+% plot(x_s, y_exp - c);
+% % plot(x_s2, y_exp - c);
+% hold on
+% plot(x_s, y_s - y_s(1));
+% % plot(x_s2, y_s2 - y_s2(1));
+% hold off
+% legend('robot profile obtained experimentally', 'robot profile obtained analytically');
+% xlabel('x coordinate of robot(in m)');
+% ylabel('y coordinate of robot(in m)');
 
 %% 7) Necessary functions used
 function delta_non_parallel = calc_delta_non_parallel(a)
@@ -165,8 +184,10 @@ function delta_non_parallel = calc_delta_non_parallel(a)
     b = 0.01;
     delta_non_parallel = (F*z.^3)/(3*E*I) - (((a*z + 3*b).^2).*z)./(3*L*(a*a*L*L + 3*a*b*b + 3*b*b)).*(F*z.^3)/(4*E*I);
 end
-% This function returns the coefficients of the predicted polynomial
 
+% This function returns the coefficients of the predicted polynomial
+% assumption before creating this function : robot profile observed in the
+% figure is assumed to be following a quadratic trajectory.
 function [a, b, c] = polyn_predictor(x,y)
     % input : x and y arrays containing values of the coordinates of the
     % polynomial (x1, x2, x3) and (y1, y2, y3)
