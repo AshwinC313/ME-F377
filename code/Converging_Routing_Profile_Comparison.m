@@ -6,16 +6,12 @@ E = 3500*10^6;
 I = (pi*(3e-3)^4)/32;
 L = 0.18;
 z = 0:0.01:L;
-F = 1.0;
 b = 0.01;
-a6 = -b/L;
-r = 0.01;
-% tau = 4;
-tau = 40;
-
+a = b/2;
+tau = 22.5;
 %% Governing equations for convergent profile
-funx = @(s) cos((1/2).*(-b/L).*tau.*s.*s + L.*tau.*s);
-funy = @(s) -sin((1/2).*(-b/L).*tau.*s.*s + L.*tau.*s);
+funx = @(s) cos((-(a-b).*tau.*s.*s)/(2.*L.*E.*I) - (b.*tau.*s)/(E.*I));
+funy = @(s) sin((-(a-b).*tau.*s.*s)/(2.*L.*E.*I) - (b.*tau.*s)/(E.*I));
 x_value = zeros(1, length(z));
 y_value = zeros(1, length(z));
 
@@ -23,7 +19,6 @@ for i = 1:length(z)
     x_value(i) = integral(funx, 0, z(i));
     y_value(i) = integral(funy, 0, z(i));
 end
-
 %% Image Processing
 img = imread('C:\Users\C.ASHWIN\Desktop\flexible_robotics\Robot_images_testing\converging_profile\converging_3.jpg');
 rot_img = imrotate(img, 360);
